@@ -1,0 +1,8 @@
+version: '3'
+services:
+  haproxy:
+    build:
+      context: .
+    environment:
+      - PORT[postgresql]=5432
+      - BACKEND[postgresql]=postgresql.dev.local

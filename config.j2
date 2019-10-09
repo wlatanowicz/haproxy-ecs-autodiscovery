@@ -1,0 +1,45 @@
+global
+  nbproc 1
+  maxconn 65536
+  pidfile /haproxy.pid
+  stats socket /tmp/socket level admin
+  description 8
+
+defaults
+  balance roundrobin
+  timeout connect 5s
+  timeout queue 5s
+  timeout client 50s
+  timeout server 50s
+
+frontend stats
+  bind *:9090
+  timeout client 5s
+  mode http
+  stats enable  # Enable stats page
+  stats hide-version  # Hide HAProxy version
+  stats realm Haproxy\ Statistics  # Title text for popup window
+  stats uri /stats
+  stats show-legends
+  stats show-desc
+
+resolvers awsdns
+  nameserver dns0 {{ nameserver }}:53
+  accepted_payload_size 8192
+  hold obsolete 30s
+  hold valid    10s
+  timeout resolve 1s
+
+
+{% for service in services %}
+
+frontend {{ service.name }}-fe
+  bind *:{{ service.port }}
+  timeout client 1h
+  default_backend {{ service.name }}-be
+
+backend {{ service.name }}-be
+  option tcp-check
+  server-template {{ service.name }} {{ service.count }} {{ service.ecs_srv }} resolvers awsdns resolve-prefer ipv4
+
+{% endfor %}
