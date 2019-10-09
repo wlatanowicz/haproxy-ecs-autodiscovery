@@ -6,3 +6,6 @@ services:
     environment:
       - PORT[web]=80
       - BACKEND[web]=_http._tcp.latanowicz.com
+
+      - PORT[db]=3363
+      - BACKEND[db]=_mysql._tcp.latanowicz.com
