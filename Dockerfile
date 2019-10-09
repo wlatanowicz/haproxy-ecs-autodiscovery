@@ -1,4 +1,4 @@
-FROM haproxy:1.8-alpine
+FROM haproxy:1.9-alpine
 
 RUN apk add python3
 RUN pip3 install jinja2==2.10.3

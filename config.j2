@@ -18,7 +18,6 @@ frontend stats
   mode http
   stats enable  # Enable stats page
   stats hide-version  # Hide HAProxy version
-  stats realm Haproxy\ Statistics  # Title text for popup window
   stats uri /stats
   stats show-legends
   stats show-desc
@@ -28,7 +27,7 @@ resolvers awsdns
   accepted_payload_size 8192
   hold obsolete 30s
   hold valid    10s
-  timeout resolve 1s
+  timeout resolve 30s
 
 
 {% for service in services %}
@@ -39,7 +38,7 @@ frontend {{ service.name }}-fe
   default_backend {{ service.name }}-be
 
 backend {{ service.name }}-be
-  option tcp-check
-  server-template {{ service.name }} {{ service.count }} {{ service.ecs_srv }} resolvers awsdns resolve-prefer ipv4
+  mode tcp
+  server-template {{ service.name }}_ {{ service.count }} {{ service.ecs_srv }} resolvers awsdns check init-addr none resolve-opts allow-dup-ip
 
 {% endfor %}

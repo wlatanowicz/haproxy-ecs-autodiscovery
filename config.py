@@ -22,7 +22,7 @@ for k in os.environ:
             'name': service,
             'ecs_srv': os.environ.get('BACKEND[{}]'.format(service)),
             'port': os.environ.get('PORT[{}]'.format(service)),
-            'count': '1',
+            'count': '5',
         })
 
 config = template.render(kwargs)

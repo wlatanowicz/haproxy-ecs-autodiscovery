@@ -4,5 +4,5 @@ services:
     build:
       context: .
     environment:
-      - PORT[postgresql]=5432
-      - BACKEND[postgresql]=postgresql.dev.local
+      - PORT[web]=80
+      - BACKEND[web]=_http._tcp.latanowicz.com
