@@ -3,9 +3,12 @@ services:
   haproxy:
     build:
       context: .
+    ports:
+      - 9090:9090
     environment:
       - PORT[web]=80
       - BACKEND[web]=_http._tcp.latanowicz.com
 
       - PORT[db]=3363
       - BACKEND[db]=_mysql._tcp.latanowicz.com
+      - COUNT[db]=2

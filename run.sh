@@ -8,4 +8,4 @@ echo "--- Config preview: ---"
 cat /usr/local/etc/haproxy/haproxy.cfg
 echo "--- / Config preview ---"
 
-haproxy -V -f /usr/local/etc/haproxy/haproxy.cfg -d
+haproxy -V -f /usr/local/etc/haproxy/haproxy.cfg
