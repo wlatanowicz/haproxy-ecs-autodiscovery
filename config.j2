@@ -6,11 +6,12 @@ global
   description 8
 
 defaults
+  option tcpka
+  option clitcpka
+  option srvtcpka
   balance roundrobin
   timeout connect 5s
   timeout queue 5s
-  timeout client 50s
-  timeout server 50s
 
 frontend stats
   bind *:9090
@@ -33,8 +34,8 @@ resolvers awsdns
 {% for service in services %}
 
 frontend {{ service.name }}-fe
+  mode tcp
   bind *:{{ service.port }}
-  timeout client 1h
   default_backend {{ service.name }}-be
 
 backend {{ service.name }}-be
